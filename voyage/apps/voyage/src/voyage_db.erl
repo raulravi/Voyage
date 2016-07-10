@@ -10,6 +10,7 @@
 
 -behaviour(gen_server).
 
+-include("voyage.hrl").
 %% API
 -export([start_link/0]).
 
@@ -53,6 +54,7 @@ start_link() ->
 %% @end
 %%--------------------------------------------------------------------
 init([]) ->
+  init_tables(),
   {ok, #{}}.
 
 %%--------------------------------------------------------------------
@@ -128,6 +130,8 @@ code_change(_OldVsn, State, _Extra) ->
 %%% Internal functions
 %%%===================================================================
 
+init_tables() ->
+  mnesia:create_table(users, [{attributes, record_info(fields, users)}]).
 
 
 
